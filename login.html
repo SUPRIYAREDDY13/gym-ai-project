@@ -5,125 +5,52 @@
     <title>Login - Gym AI System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <!-- Custom Style -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- 🔥 STEP 1: SPINNER HTML -->
-<div id="loader" style="
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.6);
-    z-index:9999;
-    justify-content:center;
-    align-items:center;
-">
-    <div class="spinner-border text-light" style="width:3rem; height:3rem;"></div>
-</div>
+<div class="container mt-5">
+    <h2 class="text-center">Login</h2>
 
-<div class="container d-flex justify-content-center align-items-center" style="min-height:100vh;">
-    
-    <div class="card p-4 shadow-lg" style="width:100%; max-width:400px; border-radius:20px;">
-        
-        <h3 class="text-center mb-4">🔐 Login</h3>
+    <input type="email" id="email" class="form-control mb-2" placeholder="Email">
+    <input type="password" id="password" class="form-control mb-2" placeholder="Password">
 
-        <!-- EMAIL -->
-        <input type="email" id="email" class="form-control mb-3" placeholder="Enter Email">
+    <button onclick="sendOTP()" class="btn btn-warning w-100 mb-2">Send OTP</button>
 
-        <!-- PASSWORD -->
-        <input type="password" id="password" class="form-control mb-3" placeholder="Enter Password">
+    <input type="text" id="otp" class="form-control mb-2" placeholder="Enter OTP">
 
-        <!-- SEND OTP -->
-        <button onclick="sendOTP()" class="btn btn-warning w-100 mb-3">
-            <i class="fas fa-envelope"></i> Send OTP
-        </button>
+    <button onclick="verifyOTP()" class="btn btn-success w-100">Login</button>
 
-        <!-- OTP -->
-        <input type="text" id="otp" class="form-control mb-3" placeholder="Enter OTP">
-
-        <!-- VERIFY -->
-        <button onclick="verifyOTP()" class="btn btn-success w-100 mb-3">
-            <i class="fas fa-check"></i> Verify & Login
-        </button>
-
-        <!-- LINKS -->
-        <div class="text-center">
-            <a href="forgot_password.html">Forgot Password?</a><br>
-            <a href="register.html">Create Account</a>
-        </div>
-
-    </div>
+    <p class="text-center mt-2">
+        <a href="forgot_password.html">Forgot Password?</a>
+    </p>
 </div>
 
 <script>
 let userEmail = "";
 
-// 🔥 STEP 2: FUNCTIONS
-function showLoader() {
-    document.getElementById("loader").style.display = "flex";
-}
-
-function hideLoader() {
-    document.getElementById("loader").style.display = "none";
-}
-
-// 🔥 STEP 3: UPDATED sendOTP()
+// SEND OTP
 function sendOTP() {
     userEmail = document.getElementById("email").value;
 
-    if (!userEmail) {
-        alert("Enter email first!");
-        return;
-    }
-
-    showLoader();
-
-    fetch("http://127.0.0.1:5000/send_otp", {
+    fetch("https://gym-ai-project-1.onrender.com/send_otp", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ email: userEmail })
     })
     .then(res => res.json())
-    .then(() => {
-        hideLoader();
-        alert("OTP sent!");
-    })
-    .catch(() => {
-        hideLoader();
-        alert("Error sending OTP");
-    });
+    .then(() => alert("OTP sent!"));
 }
 
-// 🔥 STEP 3: UPDATED verifyOTP()
+// VERIFY OTP
 function verifyOTP() {
     const otp = document.getElementById("otp").value;
 
-    if (!otp) {
-        alert("Enter OTP!");
-        return;
-    }
-
-    showLoader();
-
-    fetch("http://127.0.0.1:5000/verify_otp", {
+    fetch("https://gym-ai-project-1.onrender.com/verify_otp", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
             email: userEmail,
             otp: otp
@@ -131,20 +58,13 @@ function verifyOTP() {
     })
     .then(res => res.json())
     .then(data => {
-        hideLoader();
-
         if (data.message === "OTP verified") {
-            alert("Login successful!");
-
+            alert("Login success");
             localStorage.setItem("loggedInUser", userEmail);
             window.location.href = "member_dashboard.html";
         } else {
-            alert("Invalid OTP!");
+            alert("Invalid OTP");
         }
-    })
-    .catch(() => {
-        hideLoader();
-        alert("Verification failed");
     });
 }
 </script>

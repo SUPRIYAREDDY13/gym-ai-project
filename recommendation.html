@@ -1,95 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AI Recommendation - Gym AI System</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-
+<html>
 <body>
 
-<nav class="navbar navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">Gym AI System</a>
-    </div>
-</nav>
+<h2>AI Recommendation</h2>
 
-<div class="container my-5">
-    <h2 class="text-center mb-4">AI-Based Recommendation</h2>
+<select id="goal">
+    <option>Weight Loss</option>
+    <option>Muscle Gain</option>
+</select>
 
-    <!-- FORM -->
-    <div class="card p-4 mb-4 shadow">
-        <form id="aiForm">
+<button onclick="getRec()">Get Plan</button>
 
-            <!-- GOAL -->
-            <label class="form-label">Goal</label>
-            <select id="goal" class="form-control mb-3">
-                <option>Muscle Gain</option>
-                <option>Weight Loss</option>
-            </select>
+<p id="diet"></p>
+<p id="workout"></p>
 
-            <!-- BODY PART -->
-            <label class="form-label">Target Body Part</label>
-            <select id="body_part" class="form-control mb-3">
-                <option>Chest</option>
-                <option>Back</option>
-                <option>Legs</option>
-                <option>Arms</option>
-                <option>Shoulders</option>
-            </select>
-
-            <button class="btn btn-primary w-100">Generate Recommendation</button>
-        </form>
-    </div>
-
-    <!-- RESULT -->
-    <div class="card p-4 shadow text-center">
-        <h4>Diet Plan</h4>
-        <p id="diet">---</p>
-
-        <h4>Workout Plan</h4>
-        <p id="workout">---</p>
-
-        <h4>Health Tips</h4>
-        <p id="tip">---</p>
-
-        <h4>Recommended Video</h4>
-        <iframe id="video" width="100%" height="250" frameborder="0" allowfullscreen></iframe>
-    </div>
-</div>
-
-<!-- SCRIPT -->
 <script>
-document.getElementById("aiForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const goal = document.getElementById("goal").value;
-    const body_part = document.getElementById("body_part").value;
-
-    fetch("http://127.0.0.1:5000/get_recommendation", {
+function getRec() {
+    fetch("https://gym-ai-project-1.onrender.com/get_recommendation", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-            goal: goal,
-            body_part: body_part
+            goal: document.getElementById("goal").value
         })
     })
     .then(res => res.json())
     .then(data => {
         document.getElementById("diet").innerText = data.diet;
         document.getElementById("workout").innerText = data.workout;
-        document.getElementById("tip").innerText = data.tip;
-        document.getElementById("video").src = data.video;
-    })
-    .catch(err => {
-        console.error(err);
-        alert("Error fetching recommendation!");
     });
-});
+}
 </script>
 
 </body>

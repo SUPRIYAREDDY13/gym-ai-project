@@ -1,106 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Member Dashboard - Gym AI System</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- 🔥 STEP 1: CHART LIBRARY -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Style -->
-    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="container my-5">
+<h2>Dashboard</h2>
 
-    <h2 class="text-center mb-4">Member Dashboard</h2>
+<canvas id="attendanceChart"></canvas>
+<canvas id="workoutChart"></canvas>
 
-    <!-- Welcome -->
-    <div class="card p-3 mb-4 text-center">
-        <h4 id="welcomeUser">Welcome</h4>
-    </div>
-
-    <!-- 🔥 STEP 2: ATTENDANCE CHART CANVAS -->
-    <div class="card p-4 mb-4">
-        <h4 class="text-center">Attendance Chart</h4>
-        <canvas id="attendanceChart"></canvas>
-    </div>
-
-    <!-- 🔥 STEP 2: WORKOUT CHART CANVAS -->
-    <div class="card p-4 mb-4">
-        <h4 class="text-center">Workout Chart</h4>
-        <canvas id="workoutChart"></canvas>
-    </div>
-
-    <!-- Logout -->
-    <div class="text-center">
-        <button onclick="logoutUser()" class="btn btn-danger">Logout</button>
-    </div>
-
-</div>
-
-<!-- 🔥 STEP 3: SCRIPT -->
 <script>
 const email = localStorage.getItem("loggedInUser");
 
-// ================= WELCOME =================
-document.getElementById("welcomeUser").innerText = "Welcome, " + email;
-
-// ================= ATTENDANCE CHART =================
-fetch(`http://127.0.0.1:5000/get_attendance/${email}`)
+// Attendance
+fetch(`https://gym-ai-project-1.onrender.com/get_attendance/${email}`)
 .then(res => res.json())
 .then(data => {
-
-    const labels = data.map(d => d.date);
-    const values = data.map(d => d.status === "Present" ? 1 : 0);
-
     new Chart(document.getElementById("attendanceChart"), {
         type: "line",
         data: {
-            labels: labels,
+            labels: data.map(d => d.date),
             datasets: [{
                 label: "Attendance",
-                data: values,
-                fill: false,
-                tension: 0.4
+                data: data.map(d => d.status === "Present" ? 1 : 0)
             }]
         }
     });
-
 });
 
-// ================= WORKOUT CHART =================
-fetch(`http://127.0.0.1:5000/get_workout/${email}`)
+// Workout
+fetch(`https://gym-ai-project-1.onrender.com/get_workout/${email}`)
 .then(res => res.json())
 .then(data => {
-
-    const exercises = data.map(d => d.exercise);
-
     new Chart(document.getElementById("workoutChart"), {
         type: "bar",
         data: {
-            labels: exercises,
+            labels: data.map(d => d.exercise),
             datasets: [{
-                label: "Workout Count",
-                data: exercises.map(() => 1)
+                label: "Workout",
+                data: data.map(() => 1)
             }]
         }
     });
-
 });
-
-// ================= LOGOUT =================
-function logoutUser() {
-    localStorage.removeItem("loggedInUser");
-    alert("Logged out!");
-    window.location.href = "login.html";
-}
 </script>
 
 </body>
