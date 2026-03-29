@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Details - Gym AI System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Gym AI System</a>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h2 class="text-center mb-4">My Progress</h2>
+
+        <div class="card shadow p-4 mb-4">
+            <h4 class="mb-3">Update Progress</h4>
+            <form id="progressForm">
+                <div class="mb-3">
+                    <label class="form-label">Current Weight (kg)</label>
+                    <input type="number" class="form-control" id="weight" placeholder="Enter current weight">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">BMI</label>
+                    <input type="number" step="0.1" class="form-control" id="bmi" placeholder="Enter BMI">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Goal Status</label>
+                    <input type="text" class="form-control" id="goal" placeholder="Example: Improving / Achieved">
+                </div>
+
+                <button type="submit" class="btn btn-success">Save Progress</button>
+            </form>
+        </div>
+
+        <div class="card shadow p-4">
+            <h4 class="mb-3">Saved Progress Details</h4>
+            <p><strong>Weight:</strong> <span id="showWeight">Not added</span></p>
+            <p><strong>BMI:</strong> <span id="showBMI">Not added</span></p>
+            <p><strong>Goal Status:</strong> <span id="showGoal">Not added</span></p>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="member_dashboard.html" class="btn btn-dark">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <footer class="text-center p-3 bg-dark text-white">
+        <p class="mb-0">AI-Based Gym Analysis and Monitoring System | 2026</p>
+    </footer>
+
+    <script>
+        const progressForm = document.getElementById("progressForm");
+        const savedProgress = JSON.parse(localStorage.getItem("progressData"));
+
+        if (savedProgress) {
+            document.getElementById("showWeight").innerText = savedProgress.weight + " kg";
+            document.getElementById("showBMI").innerText = savedProgress.bmi;
+            document.getElementById("showGoal").innerText = savedProgress.goal;
+        }
+
+        progressForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const weight = document.getElementById("weight").value;
+            const bmi = document.getElementById("bmi").value;
+            const goal = document.getElementById("goal").value;
+
+            const progressData = {
+                weight: weight,
+                bmi: bmi,
+                goal: goal
+            };
+
+            localStorage.setItem("progressData", JSON.stringify(progressData));
+
+            document.getElementById("showWeight").innerText = weight + " kg";
+            document.getElementById("showBMI").innerText = bmi;
+            document.getElementById("showGoal").innerText = goal;
+
+            alert("Progress saved successfully!");
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

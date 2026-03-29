@@ -1,0 +1,48 @@
+/* BACKGROUND */
+body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+/* CARD DESIGN */
+.card {
+    border-radius: 15px;
+    background: #ffffff;
+    color: black;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* BUTTONS */
+.btn {
+    border-radius: 25px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+/* INPUTS */
+input, select {
+    border-radius: 10px !important;
+}
+
+/* HEADINGS */
+h2, h4 {
+    font-weight: bold;
+}
+
+/* NAVBAR */
+.navbar {
+    background: #000 !important;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #000;
+    color: white;
+}

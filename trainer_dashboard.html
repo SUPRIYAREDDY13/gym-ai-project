@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Dashboard - Gym AI System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<script src="script.js"></script>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">Gym AI System</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin_dashboard.html">Admin</a></li>
+                <li class="nav-item"><a class="nav-link active" href="trainer_dashboard.html">Trainer</a></li>
+                <li class="nav-item"><a class="nav-link" href="member_dashboard.html">Member</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Trainer Dashboard</h2>
+    <p id="welcomeUser" class="fw-bold text-primary text-center"></p>
+<div class="text-center mb-4">
+    <button class="btn btn-danger" onclick="logoutUser()">Logout</button>
+</div>
+
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow p-4">
+                <h3>Assigned Members</h3>
+                <p class="fs-4">45</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow p-4">
+                <h3>Workout Plans</h3>
+                <p class="fs-4">18</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow p-4">
+                <h3>Progress Updates</h3>
+                <p class="fs-4">30</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center mt-3">
+        <div class="col-md-4 mb-4">
+            <a href="workout.html" class="btn btn-dark w-100 p-3">Manage Workouts</a>
+        </div>
+        <div class="col-md-4 mb-4">
+            <a href="progress.html" class="btn btn-dark w-100 p-3">Track Member Progress</a>
+        </div>
+        <div class="col-md-4 mb-4">
+            <a href="recommendation.html" class="btn btn-dark w-100 p-3">View AI Recommendations</a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>AI-Based Gym Analysis and Monitoring System | 2026</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
