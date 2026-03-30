@@ -11,8 +11,8 @@ CORS(app)
 # ================= EMAIL CONFIG =================
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = 'sgadibavitec24@ced.alliance.edu.in'
-app.config['MAIL_PASSWORD'] = 'your_16_digit_app_password_here' # 🔴 IMPORTANT
+app.config['MAIL_USERNAME'] = 'yourrealgmail@gmail.com'
+app.config['MAIL_PASSWORD'] = 'your_16_digit_app_password'
 app.config['MAIL_USE_TLS'] = True
 
 mail = Mail(app)
